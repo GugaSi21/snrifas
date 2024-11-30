@@ -2,9 +2,7 @@
 const paidNumbers = [
   { number: 29, client: "Gustavo" },
   { number: 98, client: "Thiago" },
-  { number: 14, client: "Sara Rodrigues" }
-  
-  
+  { number: 69, client: "Sara Rodrigues" }
 ];
 
 let selectedNumbers = [];
@@ -20,8 +18,8 @@ function showPaidClients(clients) {
       const card = document.createElement("div");
       card.classList.add("client-card");
       card.innerHTML = `
-          <h5 class="client-name">${p.client}</h5>
-          <p class="client-number">Número: ${p.number}</p>
+        <h5 class="client-name">${p.client}</h5>
+        <p class="client-number">Número: ${p.number}</p>
       `;
       clientList.appendChild(card);
     });
@@ -121,3 +119,6 @@ document.getElementById("cancel-button").addEventListener("click", cancelSelecti
 // Gerar números e exibir clientes pagos
 generateNumbers();
 showPaidClients(paidNumbers);
+
+// Chama a função filterClients quando o usuário digitar no campo de busca
+document.getElementById('search-input').addEventListener('input', filterClients);
