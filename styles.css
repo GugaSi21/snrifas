@@ -11,7 +11,7 @@ body {
 /* Estilo da grid de números */
 #num-grid .row {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 10 colunas padrão */
+    grid-template-columns: repeat(10, 1fr); /* 10 colunas padrão para desktop */
     gap: 4px; /* Menos espaçamento entre os botões */
     padding: 0 5px;
     max-width: 100%;
@@ -91,7 +91,7 @@ body {
 #search-input {
     border-radius: 30px;
     padding: 12px;
-    width: 300px;
+    width: 100%; /* 100% de largura no celular */
     max-width: 100%;
     margin-bottom: 20px;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
@@ -144,6 +144,7 @@ button:hover {
     max-height: 250px;
     overflow-y: auto;
     margin-top: 20px;
+    padding-right: 10px; /* Pequeno ajuste no padding da lista */
 }
 
 /* Estilização dos cards de clientes pagos */
@@ -179,4 +180,12 @@ button:hover {
     padding: 20px 0;
     text-align: center;
     margin-top: 50px;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+footer p {
+    margin: 0;
 }
