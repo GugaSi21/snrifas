@@ -1,181 +1,159 @@
-/* Resetando margens e padding para consistência */
-* {
+/* Estilo geral da página */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+}
+
+/* Estilo da grid de números */
+#num-grid .row {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 colunas padrão */
+    gap: 4px; /* Menos espaçamento entre os botões */
+    padding: 0 5px;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
-/* Estilo geral da página */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    padding-bottom: 50px;
-}
-
-/* Cabeçalho */
-header {
-    background: linear-gradient(45deg, #007bff, #6f42c1);
-    border-radius: 12px;
-    padding: 60px 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    color: #fff;
-    text-align: center;
-}
-
-header h1 {
-    font-size: 3.5rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-header p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-}
-
-header button {
-    background-color: #f8f9fa;
-    color: #007bff;
-    font-size: 1.1rem;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-header button:hover {
-    background-color: #007bff;
-    color: #fff;
-    transform: scale(1.1);
-}
-
-/* Seção Sorteado */
-#sorteado-card {
-    max-width: 18rem;
-    margin: 0 auto;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-/* Seção de Premiação */
-.card-img-top {
-    max-height: 200px;
-    object-fit: cover;
-}
-
-.card-body {
-    background-color: #f8f9fa;
-}
-
-.card-title {
-    font-size: 1.25rem;
-    color: #17a2b8;
-}
-
-/* Grid de Números */
-#num-grid .row {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
-    justify-items: center;
-    margin-top: 20px;
-}
-
+/* Estilo de cada botão de número */
 #num-grid button {
-    font-size: 18px;
-    padding: 20px;
-    width: 70px;
-    height: 70px;
+    font-size: 12px; /* Fonte menor para ajustar os números */
+    width: 100%;
+    height: 36px; /* Botões um pouco menores */
+    display: flex;
+    justify-content: center; /* Centraliza o número horizontalmente */
+    align-items: center;     /* Centraliza o número verticalmente */
     border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 6px; /* Bordas mais arredondadas */
     background-color: #28a745;
     color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    margin: 3px; /* Um pequeno espaço entre os botões */
 }
 
+/* Quando o número é selecionado */
 #num-grid button.selected {
     background-color: #007bff;
     color: white;
     transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.5);
 }
 
+/* Quando o número está pago */
 #num-grid button.paid {
     background-color: #e90a0a;
     color: white;
     cursor: not-allowed;
-    box-shadow: 0 4px 10px rgba(233, 10, 10, 0.5);
+    box-shadow: 0 8px 15px rgba(233, 10, 10, 0.5);
 }
 
 #num-grid button:hover {
     background-color: #17a2b8;
     transform: scale(1.1);
-    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
 }
 
-/* Responsividade */
+#num-grid button:not(.paid):not(.selected) {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 1024px) {
+    #num-grid .row {
+        grid-template-columns: repeat(6, 1fr); /* 6 colunas em tablets */
+    }
+}
+
 @media (max-width: 768px) {
     #num-grid .row {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
-    header h1 {
-        font-size: 2.5rem;
-    }
-
-    #sorteado-card {
-        max-width: 15rem;
+        grid-template-columns: repeat(5, 1fr); /* 5 colunas em telas menores */
     }
 }
 
 @media (max-width: 576px) {
     #num-grid .row {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr); /* 4 colunas em telas pequenas */
     }
 
-    header h1 {
-        font-size: 2rem;
+    #num-grid button {
+        font-size: 11px; /* Fonte ainda menor para celulares */
+        height: 30px; /* Botões mais baixos */
     }
 }
 
-footer {
-    background-color: #343a40;
+/* Estilo do campo de busca */
+#search-input {
+    border-radius: 30px;
+    padding: 12px;
+    width: 300px;
+    max-width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+#search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+}
+
+/* Estilo dos botões de confirmação e cancelamento */
+button {
+    border-radius: 50px;
+    padding: 12px 35px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+#confirm-button {
+    background-color: #28a745;
     color: white;
-    padding: 20px 0;
-    text-align: center;
 }
 
-/* Botões de Confirmar e Cancelar */
-button:disabled {
-    background-color: #ccc;
+#cancel-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+#cancel-button:disabled,
+#confirm-button:disabled {
     cursor: not-allowed;
+    opacity: 0.6;
 }
 
-/* Lista de Clientes Pagos */
+button:hover {
+    transform: scale(1.1);
+}
+
+#cancel-button:hover {
+    background-color: #c82333;
+}
+
+#confirm-button:hover {
+    background-color: #218838;
+}
+
+/* Estilo da lista de clientes pagos */
 #client-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 300px;
+    max-height: 250px;
     overflow-y: auto;
-    padding-right: 10px;
+    margin-top: 20px;
 }
 
+/* Estilização dos cards de clientes pagos */
 .client-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #ffffff;
+    background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 15px;
+    margin-bottom: 15px;
+    border-left: 5px solid #007bff;
     transition: transform 0.3s ease;
 }
 
@@ -183,30 +161,22 @@ button:disabled {
     transform: translateY(-5px);
 }
 
-.client-name {
+.client-card .client-name {
     font-size: 1.2rem;
     font-weight: bold;
-    color: #007bff;
-    margin-bottom: 5px;
-}
-
-.client-number {
-    font-size: 1rem;
     color: #333;
 }
 
-/* Botão Cancelar Seleção em Vermelho */
-#cancel-button {
-    background-color: #dc3545;
-    color: #fff;
+.client-card .client-number {
+    font-size: 1rem;
+    color: #007bff;
 }
 
-#cancel-button:enabled {
-    background-color: #dc3545;
+/* Rodapé */
+.footer {
+    background-color: #343a40;
     color: white;
-}
-
-#cancel-button:disabled {
-    background-color: #ccc;
-    color: #888;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
 }
