@@ -1,0 +1,287 @@
+/* Resetando margens e padding para consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do body */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Estilização da Grid de Números */
+#num-grid .row {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr); /* 10 colunas por padrão */
+    gap: 10px;
+    justify-items: center;
+}
+
+#num-grid button {
+    font-size: 16px;
+    padding: 15px;
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Botão selecionado */
+#num-grid button.selected {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Botão pago */
+#num-grid button.paid {
+    background-color: #e90a0a;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* Botão não pago */
+#num-grid button:not(.paid):not(.selected) {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Hover do botão */
+#num-grid button:hover {
+    background-color: #17a2b8;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Estilos para botões desabilitados */
+#cancel-button:disabled, #confirm-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: #6c757d; /* Cor para desabilitar */
+}
+
+/* Estilização dos botões */
+button {
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+
+/* Botão de confirmação */
+#confirm-button {
+    background-color: #28a745;
+    color: white;
+}
+
+#cancel-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Efeito hover nos botões */
+button:hover {
+    transform: scale(1.1);
+}
+
+#cancel-button:hover {
+    background-color: #c82333;
+}
+
+#confirm-button:hover {
+    background-color: #218838;
+}
+
+/* Foco para melhorar a navegação com teclado */
+button:focus, #search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+/* Lista de Clientes Pagos */
+#client-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.client-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(245, 218, 218, 0.993);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 5px solid #007bff;
+    transition: transform 0.2s ease-in-out;
+}
+
+.client-card:hover {
+    transform: translateY(-5px);
+}
+
+.client-card .client-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.client-card .client-number {
+    font-size: 1rem;
+    color: #007bff;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #num-grid .row {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    #num-grid .row {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    /* Ajustes nas margens do header */
+    header .container {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .footer {
+        padding: 10px;
+    }
+}
+
+/* Estilo do campo de pesquisa */
+#search-input {
+    border-radius: 20px;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px; /* Limita o tamanho da caixa de pesquisa */
+}
+
+#search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Melhorias para cabeçalho */
+header {
+    background: linear-gradient(90deg, #007bff, #28a745);
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-bottom: 5px solid #0056b3;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+header p {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+}
+
+header .row p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+header .row .col-12 p span {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+header .lead {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Footer */
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 50px;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background: radial-gradient(circle, rgba(245, 241, 241, 0.1) 0%, rgba(0, 0, 0, 0.9) 100%);
+    height: 100vh;
+    margin: 0;
+    color: white;
+    position: relative;
+}
+
+@keyframes spaceAnimation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/stars.png'); /* Textura de estrelas */
+    opacity: 0.2;
+    animation: spaceAnimation 50s infinite linear;
+    z-index: -1;
+}
+h3 {
+    color: white; /* Altera a cor para branco */
+}
+/* Estilo da seção Sorteado */
+#sorteado-card {
+    background-color: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sorteado-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+}
+
+#sorteado-number {
+    color: #007bff;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+#sorteado-name {
+    color: #555;
+    font-size: 1.2rem;
+}
+
+/* Título da seção */
+#sorteado-card h5 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+}

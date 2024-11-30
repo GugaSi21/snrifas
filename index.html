@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Resetando margens e padding para consistência */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilo geral da página */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #e4e8ec;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Estilo da grid de números */
+        #num-grid .row {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 15px;
+            justify-items: center;
+        }
+
+        #num-grid button {
+            font-size: 18px;
+            padding: 15px;
+            width: 70px;
+            height: 70px;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #num-grid button.selected {
+            background-color: #007bff;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.5);
+        }
+
+        #num-grid button.paid {
+            background-color: #e90a0a;
+            color: white;
+            cursor: not-allowed;
+            box-shadow: 0 8px 15px rgba(233, 10, 10, 0.5);
+        }
+
+        #num-grid button:not(.paid):not(.selected) {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #num-grid button:hover {
+            background-color: #17a2b8;
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Estilo dos botões de confirmação e cancelamento */
+        button {
+            border-radius: 50px;
+            padding: 12px 35px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        #confirm-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #cancel-button {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #cancel-button:disabled,
+        #confirm-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        #cancel-button:hover {
+            background-color: #c82333;
+        }
+
+        #confirm-button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilização do campo de pesquisa */
+        #search-input {
+            border-radius: 30px;
+            padding: 12px;
+            width: 300px;
+            max-width: 100%;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        #search-input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        }
+
+        /* Lista de clientes pagos */
+        #client-list {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+
+        .client-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 5px solid #007bff;
+            transition: transform 0.3s ease;
+        }
+
+        .client-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .client-card .client-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .client-card .client-number {
+            font-size: 1rem;
+            color: #007bff;
+        }
+
+        /* Rodapé */
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            #num-grid .row {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            #num-grid .row {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <!-- Cabeçalho -->
+        <header>
+            <h1 class="display-4">Rifa Online</h1>
+            <p class="lead">Escolha um número disponível e confirme seu pagamento!</p>
+        </header>
+<!-- Seção Sorteado -->
+<section class="mb-4">    =
+    <div id="sorteado-card" class="card mx-auto" style="width: 18rem;">
+        <div class="card-body text-center">
+            <h5 class="card-title">Número Sorteado</h5>
+            <p id="sorteado-number" class="card-text" style="font-size: 2rem; font-weight: bold;">X</p>
+            <p id="sorteado-name" class="card-text" style="font-size: 1rem; color: #555;">Nome: Ainda não sorteado</p>
+        </div>
+    </div>
+</section>
+
+        <!-- Objetivo e Valor -->
+        <section class="row mb-4 text-center">
+            <div class="col-12">
+                <p><strong>Objetivo da Rifa:</strong> PIX DA SORTE!</p>
+                <p><strong>Valor de cada número:</strong> R$ 10,00</p>
+            </div>
+        </section>
+
+        <!-- Premiação -->
+        <section class="row mb-5 text-center">
+            <div class="col-12">
+                <h2>Premiação</h2>
+                <div class="card mx-auto" style="width: 18rem;">
+                    <img src="https://i.postimg.cc/FKMdWB1Y/imagem-2024-11-30-085423833.png" class="card-img-top" alt="Premiação">
+                    <div class="card-body">
+                        <h5 class="card-title">R$ 500,00</h5>
+                        <p class="card-text">Sorteio será realizado quando todos os números forem vendidos!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grid de Números -->
+        <section id="num-grid" class="mb-4">
+            <div class="row">
+                <!-- Números serão gerados aqui pelo JavaScript -->
+            </div>
+        </section>
+
+        <!-- Clientes Pagos com Pesquisa ao Lado -->
+        <section class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Clientes Pagos</h3>
+                <input id="search-input" type="text" class="form-control" placeholder="Pesquise por nome ou número..." oninput="filterClients()">
+            </div>
+            <div id="client-list" class="list-group overflow-auto">
+                <!-- Lista de clientes pagos será gerada aqui -->
+            </div>
+        </section>
+
+        <!-- Botões -->
+        <div class="d-flex justify-content-center mt-3">
+            <button id="confirm-button" class="btn btn-success me-3">
+                <i class="fas fa-check"></i> Confirmar no WhatsApp
+            </button>
+            <button id="cancel-button" class="btn btn-danger">
+                <i class="fas fa-times"></i> Cancelar Seleção
+            </button>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Rifa Online - Todos os direitos reservados</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
