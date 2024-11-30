@@ -98,7 +98,7 @@ function confirmPayment() {
 
   const numbers = selectedNumbers.join(", ");
   const message = `Olá, gostaria de confirmar minha rifa com os números ${numbers}. Qual o valor do pagamento para confirmar?`;
-  const whatsappLink = `https://wa.me/5569993083838?text=${encodeURIComponent(message)}`;
+  const whatsappLink = `https://wa.me/5569993073838?text=${encodeURIComponent(message)}`;
   window.open(whatsappLink, "_blank");
 }
 
