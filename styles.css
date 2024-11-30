@@ -85,6 +85,11 @@ body {
         font-size: 11px; /* Fonte ainda menor para celulares */
         height: 30px; /* Botões mais baixos */
     }
+
+    /* Garantir que a grid não ultrapasse a tela */
+    #num-grid {
+        overflow-x: auto;
+    }
 }
 
 /* Estilo do campo de busca */
