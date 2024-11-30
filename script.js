@@ -1,182 +1,133 @@
-/* Estilo geral da página */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+// Lista de números pagos com clientes
+const paidNumbers = [
+  { number: 29, client: "Gustavo" },
+  { number: 98, client: "Thiago" },
+  { number: 69, client: "Sara Rodrigues" },
+  { number: 70, client: "Sara Rodrigues" },
+  { number: 30, client: "Sara Rodrigues" },
+  { number: 40, client: "Sara Rodrigues" },
+  { number: 20, client: "Sara Rodrigues" },
+  { number: 10, client: "Sara Rodrigues" },
+  { number: 80, client: "Sara Rodrigues" },
+  { number: 100, client: "Sara Rodrigues" },
+  { number: 1, client: "Sara Rodrigues" },
+  { number: 2, client: "Sara Rodrigues" }
+];
+
+let selectedNumbers = [];
+
+function showPaidClients(clients) {
+  const clientList = document.getElementById("client-list");
+  clientList.innerHTML = ''; // Limpa a lista
+
+  if (clients.length === 0) {
+    clientList.innerHTML = '<p class="text-center">Nenhum cliente encontrado.</p>';
+  } else {
+    clients.forEach(p => {
+      const card = document.createElement("div");
+      card.classList.add("client-card");
+      card.innerHTML = `
+        <h5 class="client-name">${p.client}</h5>
+        <p class="client-number">Número: ${p.number}</p>
+      `;
+      clientList.appendChild(card);
+    });
+  }
 }
 
-/* Estilo da grid de números */
-#num-grid .row {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 10 colunas padrão em telas maiores */
-    gap: 8px; /* Espaçamento entre os botões */
-    padding: 0 5px;
-    max-width: 100%;
-    box-sizing: border-box;
+function filterClients() {
+  const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
+  const filteredClients = paidNumbers.filter(client =>
+    client.client.toLowerCase().includes(searchTerm) ||
+    client.number.toString().includes(searchTerm)
+  );
+  showPaidClients(filteredClients);
 }
 
-/* Estilo de cada botão de número (quadrado) */
-#num-grid button {
-    font-size: 14px;
-    width: 100%;
-    height: 38px; /* Tamanho mais compacto */
-    display: flex;
-    justify-content: center; /* Centraliza o número horizontalmente */
-    align-items: center;     /* Centraliza o número verticalmente */
-    border: none;
-    border-radius: 8px;
-    background-color: #28a745;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    margin: 3px;
-}
+function generateNumbers() {
+  const grid = document.getElementById("num-grid").querySelector(".row");
+  for (let i = 1; i <= 100; i++) {
+    const button = document.createElement("button");
+    button.textContent = i;
 
-/* Quando o número é selecionado */
-#num-grid button.selected {
-    background-color: #007bff;
-    color: white;
-    transform: scale(1.1);
-    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.5);
-}
-
-/* Quando o número está pago */
-#num-grid button.paid {
-    background-color: #e90a0a;
-    color: white;
-    cursor: not-allowed;
-    box-shadow: 0 8px 15px rgba(233, 10, 10, 0.5);
-}
-
-#num-grid button:hover {
-    background-color: #17a2b8;
-    transform: scale(1.1);
-    box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
-}
-
-#num-grid button:not(.paid):not(.selected) {
-    background-color: #28a745;
-    color: white;
-}
-
-/* Responsividade para dispositivos móveis */
-@media (max-width: 1024px) {
-    #num-grid .row {
-        grid-template-columns: repeat(6, 1fr); /* 6 colunas em tablets */
-    }
-}
-
-@media (max-width: 768px) {
-    #num-grid .row {
-        grid-template-columns: repeat(5, 1fr); /* 5 colunas em telas menores */
-    }
-}
-
-@media (max-width: 576px) {
-    #num-grid .row {
-        grid-template-columns: repeat(4, 1fr); /* 4 colunas em telas muito pequenas */
+    // Marca os números pagos
+    const paid = paidNumbers.find(p => p.number === i);
+    if (paid) {
+      button.classList.add("paid");
+      button.disabled = true;
     }
 
-    #num-grid button {
-        width: 100%; /* Os botões ainda ocupam 100% da largura da coluna */
-        font-size: 12px; /* Fonte menor para se ajustar bem */
-    }
+    button.addEventListener("click", () => handleNumberSelection(i, button));
+
+    const col = document.createElement("div");
+    col.classList.add("col-4", "col-sm-3", "col-md-2");
+    col.appendChild(button);
+    grid.appendChild(col);
+  }
 }
 
-/* Estilo do campo de busca */
-#search-input {
-    border-radius: 30px;
-    padding: 12px;
-    width: 300px;
-    max-width: 100%;
-    margin-bottom: 20px;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    transition: box-shadow 0.3s ease;
+function handleNumberSelection(number, button) {
+  if (button.classList.contains("paid")) {
+    alert("Este número já foi pago.");
+    return;
+  }
+
+  // Adicionar ou remover a seleção do número
+  if (button.classList.contains("selected")) {
+    button.classList.remove("selected");
+    selectedNumbers = selectedNumbers.filter(num => num !== number);
+  } else {
+    button.classList.add("selected");
+    selectedNumbers.push(number);
+  }
+
+  // Ativar ou desativar os botões de confirmação e cancelamento
+  const confirmButton = document.getElementById("confirm-button");
+  const cancelButton = document.getElementById("cancel-button");
+
+  if (selectedNumbers.length > 0) {
+    confirmButton.disabled = false;
+    cancelButton.disabled = false;
+
+    // Rolando até o botão de confirmar pagamento
+    confirmButton.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else {
+    confirmButton.disabled = true;
+    cancelButton.disabled = true;
+  }
 }
 
-#search-input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+function confirmPayment() {
+  if (selectedNumbers.length === 0) {
+    alert("Por favor, selecione ao menos um número para confirmar.");
+    return;
+  }
+
+  const numbers = selectedNumbers.join(", ");
+  const message = `Olá, gostaria de confirmar minha rifa com os números ${numbers}. Qual o valor do pagamento para confirmar?`;
+  const whatsappLink = `https://wa.me/5569993073838?text=${encodeURIComponent(message)}`;
+  window.open(whatsappLink, "_blank");
 }
 
-/* Estilo dos botões de confirmação e cancelamento */
-button {
-    border-radius: 50px;
-    padding: 12px 35px;
-    font-weight: bold;
-    transition: transform 0.3s ease;
+function cancelSelection() {
+  const buttons = document.querySelectorAll("#num-grid button.selected");
+  buttons.forEach(button => button.classList.remove("selected"));
+
+  selectedNumbers = [];
+  const confirmButton = document.getElementById("confirm-button");
+  const cancelButton = document.getElementById("cancel-button");
+
+  confirmButton.disabled = true;
+  cancelButton.disabled = true;
 }
 
-#confirm-button {
-    background-color: #28a745;
-    color: white;
-}
+// Eventos dos botões
+document.getElementById("confirm-button").addEventListener("click", confirmPayment);
+document.getElementById("cancel-button").addEventListener("click", cancelSelection);
 
-#cancel-button {
-    background-color: #dc3545;
-    color: white;
-}
+// Gerar números e exibir clientes pagos
+generateNumbers();
+showPaidClients(paidNumbers);
 
-#cancel-button:disabled,
-#confirm-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
-
-button:hover {
-    transform: scale(1.1);
-}
-
-#cancel-button:hover {
-    background-color: #c82333;
-}
-
-#confirm-button:hover {
-    background-color: #218838;
-}
-
-/* Estilo da lista de clientes pagos */
-#client-list {
-    max-height: 250px;
-    overflow-y: auto;
-    margin-top: 20px;
-}
-
-/* Estilização dos cards de clientes pagos */
-.client-card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 15px;
-    border-left: 5px solid #007bff;
-    transition: transform 0.3s ease;
-}
-
-.client-card:hover {
-    transform: translateY(-5px);
-}
-
-.client-card .client-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-}
-
-.client-card .client-number {
-    font-size: 1rem;
-    color: #007bff;
-}
-
-/* Rodapé */
-.footer {
-    background-color: #343a40;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 50px;
-}
+// Chama a função filterClients quando o usuário digitar no campo de busca
+document.getElementById('search-input').addEventListener('input', filterClients);
