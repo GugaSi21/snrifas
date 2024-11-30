@@ -2,7 +2,7 @@
 const paidNumbers = [
   { number: 29, client: "Gustavo" },
   { number: 98, client: "Thiago" },
-  { number: 69, client: "Sara Rodrigues" }
+  { number: 14, client: "Sara Rodrigues" }
   
   
 ];
