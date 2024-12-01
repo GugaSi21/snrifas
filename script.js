@@ -2,16 +2,8 @@
 const paidNumbers = [
   { number: 29, client: "Gustavo" },
   { number: 98, client: "Thiago" },
-  { number: 69, client: "Sara Rodrigues" },
-  { number: 70, client: "Sara Rodrigues" },
-  { number: 30, client: "Sara Rodrigues" },
-  { number: 40, client: "Sara Rodrigues" },
-  { number: 20, client: "Sara Rodrigues" },
-  { number: 10, client: "Sara Rodrigues" },
-  { number: 80, client: "Sara Rodrigues" },
-  { number: 100, client: "Sara Rodrigues" },
-  { number: 1, client: "Sara Rodrigues" },
-  { number: 2, client: "Sara Rodrigues" }
+  { number: 69, client: "Oliveira" }
+  
 ];
 
 let selectedNumbers = [];
@@ -46,7 +38,7 @@ function filterClients() {
 
 function generateNumbers() {
   const grid = document.getElementById("num-grid").querySelector(".row");
-  for (let i = 1; i <= 100; i++) {
+  for (let i = 1; i <= 150; i++) {
     const button = document.createElement("button");
     button.textContent = i;
 
